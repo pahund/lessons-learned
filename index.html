@@ -60,10 +60,10 @@
 
                 <!-- ebay -->
                 <section>
-                    <p>Germany's biggest online automotive ecommerce platform</p>
-                    <p>part of <img src="images/ebay-logo.svg" style="height: 4rem; vertical-align: middle"> since 2004</p>
-                    <p>10.81M visitors / month*</p>
-                    <p><small>* AGOF Digital Facts 2015-06</small></p>
+                    <p>Germany's biggest automotive ecommerce platform</p>
+                    <p>part of <img src="images/ebay-logo.svg" style="height: 4rem; vertical-align: middle; margin: 0 1rem"> since 2004</p>
+                    <p>10.81M visitors / month</p>
+                    <p><small>(AGOF Digital Facts 2015-06)</small></p>
                     <p>~300 requests / second</p>
 
                 </section>
@@ -80,6 +80,11 @@
 
                 <!-- breaking the monolith -->
                 <section>
+                    <h1>Breaking the Monolith</h1>
+                </section>
+
+                <!-- breaking the monolith cartoon -->
+                <section>
                     <div class="PH_TODO">breaking the monolith: cartoon - 2001 movie monolith with apes and wrecking ball</div>
                 </section>
 
@@ -93,81 +98,87 @@
                     <h1>Lessons Learned</h1>
                 </section>
 
+                <!-- lessons learned: early prod -->
+                <section>
+                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-early-prod_700x334.png">
+                </section>
+
+                <!-- gatling before -->
+                <section>
+                    <a href="demos/gatling/Copenhagen_load_test_before/req_home-de---cph--0a4bf.html"><img src="images/gatling-before.png"></a>
+                </section>
+
+                <!-- gatling after -->
+                <section>
+                    <a href="demos/gatling/Copenhagen_load_test_after/req_home-de---cph--0a4bf.html"><img src="images/gatling-after.png"></a>
+                </section>
+
+                <!-- comparison before-after -->
+                <section>
+                    <img src="images/gatling-old-vs-new.png">
+                </section>
+
                 <!-- lessons learned: testable -->
                 <section>
                     <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-testable_700x426.png">
                 </section>
 
+                <!-- cartoon: building up, tearing down -->
+                <section>
+                    <img src="images/building-up-tearing-down_500x400.png">
+                </section>
+
                 <!-- test code example 1 -->
-                <!-- PH_TODO: replace with example from blog article -->
                 <section>
                     <!-- code under test -->
                     <section>
                         <h2 class="red">Bad Example – do not do this!</h2>
                         <p class="no-margin-bottom"><small>config.js</small></p>
                         <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-export default {
-    serviceUrl: "http://my.service/endpoint",
-    timeout: 1000
-}
-                        </code></pre>
-                            <p class="no-margin-bottom"><small>service.js</small></p>
-                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-import config from "config";
-import axios from "axios";
-import withTimeout from "withTimeout";
+const path = "./makes.json"
 
-export default () =>
-    withTimeout(axios.get(config.serviceUrl), config.timeout);
+export default {
+    path
+};
+                        </code></pre>
+                            <p class="no-margin-bottom"><small>makes.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+import config from "./config";
+
+const data = require(config.path);
+
+function get(segment) {
+    return data[segment];
+}
+
+export default {
+    get
+};
                         </code></pre>
                     </section>
-                    <!-- unit test code 1 -->
+                    <!-- unit test code -->
                     <section>
-                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
-                        <pre class="medium no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-describe("When I call the service", () => {
-    describe("and the service returns data in time", () => {
-        before(setup);
-        describe("the resulting promise", () => {
-            it("is resolved", () => ok.called.should.be.ok);
-            it("is not rejected", () => ko.called.should.not.be.ok);
+                        <p class="no-margin-bottom"><small>makes-test.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+import chai from "chai";
+import makes from "./makes";
+
+chai.should();
+
+let result = null;
+
+describe("When I use the makes module", () => {
+    describe("to get car makes", () => {
+        before(() => result = makes.get("cars"));
+        describe("the result", () => {
+            it("is a list of car makes", () => {
+                result[0].name.should.equal("Abarth");
+                result[1].name.should.equal("AC");
+                result[2].name.should.equal("Acura");
+            });
         });
-        after(teardown);
-    });
-    describe("and the service times out", () => {
-        before(setupTimeout);
-        describe("the resulting promise", () => {
-            it("is rejected", () => ko.called.should.be.ok);
-            it("is not resolved", () => ok.called.should.not.be.ok);
-        });
-        after(teardown);
     });
 });
-                        </code></pre>
-                    </section>
-
-                    <!-- unit test code 2 -->
-                    <section>
-                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
-                        <pre class="medium no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-function setupTimeout(done) {
-    sinon.stub(axios, "get").returns(new Promise(resolve =>
-        setTimeout(() => {
-            resolve({
-                data: "SOME_DATA"
-            });
-        }, 2000)
-    ));
-    ok = sinon.spy();
-    ko = sinon.spy();
-    result = service().then(() => {
-        ok();
-        done();
-    }).catch(() => {
-        ko();
-        done();
-    });
-}
                         </code></pre>
                     </section>
                 </section>
@@ -179,80 +190,67 @@ function setupTimeout(done) {
                         <h2 class="green">Good Example</h2>
                         <p class="no-margin-bottom"><small>config.js</small></p>
                         <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+const path = "./makes.json"
+
 export default {
-    get() {
-        return {
-            serviceUrl: "http://my.service/endpoint",
-            timeout: 1000
-        };
+    getPath() {
+        return path;
     }
 };
                         </code></pre>
                     </section>
                     <section>
-                        <p class="no-margin-bottom"><small>service.js</small></p>
+                        <p class="no-margin-bottom"><small>makes.js</small></p>
                         <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-import configurator from "./config";
-import axios from "axios";
-import withTimeout from "./withTimeout";
+import config from "./config";
 
-export default () => {
-    const config = configurator.get();
-    return withTimeout(axios.get(config.serviceUrl), config.timeout);
+let data = null;
+
+function init() {
+    data = require(config.getPath());
+}
+
+function get(segment) {
+    return data ? data[segment] : null;
+}
+
+export default {
+    init,
+    get
 };
                         </code></pre>
                     </section>
                     <section>
-                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
-                        <pre class="small no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-function setupTimeout(done) {
-    sinon.stub(axios, "get").returns(new Promise(resolve => setTimeout(() => {
-        resolve({
-            data: "SOME_DATA"
+                        <p class="no-margin-bottom"><small>makes-test.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+import chai from "chai";
+import sinon from "sinon";
+import config from "./config";
+import makes from "./makes";
+
+chai.should();
+
+let result = null;
+
+describe("When I use the makes module", () => {
+    describe("to get car makes", () => {
+        before(() => {
+            sinon.stub(config, "getPath").returns("./test-makes.json");
+            makes.init();
+            result = makes.get("cars");
         });
-    }, 10)));
-    sinon.stub(config, "get").returns({
-        serviceUrl: "http://my.service/endpoint",
-        timeout: 0
+        describe("the result", () => {
+            it("is a list of car makes", () => {
+                result[0].name.should.equal("CarMake1");
+                result[1].name.should.equal("CarMake2");
+                result[2].name.should.equal("CarMake3");
+            });
+        });
+        after(() => config.getPath.restore());
     });
-    ok = sinon.spy();
-    ko = sinon.spy();
-    result = service().then(() => {
-        ok();
-        done();
-    }).catch(() => {
-        ko();
-        done();
-    });
-}
+});
                         </code></pre>
                     </section>
-                </section>
-
-                <!-- test system demo -->
-                <section>
-                    <!-- PH_TODO: new version with screen resolution suitable for presentation -->
-                    <iframe class="box-shadow" style="width: 64rem; height: 40rem" src="https://www.youtube.com/embed/w5OBYjd27hs?vq=hd1080&start=14" frameborder="0" allowfullscreen></iframe>
-                </section>
-
-                <!-- lessons learned: early prod -->
-                <section>
-                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-early-prod_700x334.png">
-                </section>
-
-                <!-- gatling before -->
-                <section>
-                    <a href="demos/gatling/Copenhagen_load_test_before/req_home-de---cph--0a4bf.html"><img class="plain" src="images/gatling-before.png"></a>
-                </section>
-
-                <!-- gatling after -->
-                <section>
-                    <a href="demos/gatling/Copenhagen_load_test_after/req_home-de---cph--0a4bf.html"><img class="plain" src="images/gatling-after.png"></a>
-                </section>
-
-                <!-- grafana -->
-                <section>
-                    <a href="images/grafana.png"><img class="box-shadow" src="images/grafana.png"></a>
                 </section>
 
                 <!-- lessons learned: pairing -->
@@ -273,40 +271,6 @@ function setupTimeout(done) {
                 <!-- lessons learned: simple -->
                 <section>
                     <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-simple_700x341.png">
-                </section>
-
-                <!-- not so simple code -->
-                <section>
-                    <pre class="small no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-/**
- * withArgs.js
- *
- * Curries a function with additional arguments, which are prepended
- * to the arguments passed to the function.
- *
- * Example:
- *
- * function foo(a, b, c, d) {
- *     console.log(a + b + c + d);
- * }
- *
- * let bar = withArgs(1, 2)(foo);
- *
- * bar(3, 4); // => 10
- *
- * [ 3, 4 ].forEach(bar); // => 6; => 7
- *
- */
-
-export default (...args1) => func => (...args2) => func(...args1, ...args2);
-                    </code></pre>
-
-                </section>
-
-                <!-- job offer -->
-                <section>
-                    <h1>Join our team!</h1>
-                    <h2><a href="http://j.rfer.us/EBRhYLmtO">j.rfer.us/EBRhYLmtO</a></h2>
                 </section>
 
                 <!-- end -->
