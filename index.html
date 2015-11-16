@@ -42,30 +42,30 @@
 
                 <!-- title -->
 				<section>
-					<h2>Relaunching mobile.de<br>with Node.js and ES6</h2>
+					<h2>Lessons Learned from Building a<br>High-Traffic Express Webapp</h2>
                     <img src="images/node-red-pill.png" style="height: 18rem">
-					<h3>29th eBay Tech Talk in Berlin, Germany</h3>
+					<h3>NodeConf Barcelona 2015</h3>
 					<p>
 						<a href="http://about.me/wiekatz">Patrick Hund</a>,
                         software developer at <a href="http://www.mobile.de/">mobile.de</a>
 					</p>
 				</section>
 
-                <!-- ebay -->
-                <section>
-                    <img src="images/ebay-logo.svg">
-                </section>
-
-                <!-- numbers -->
+                <!-- mobile.de -->
                 <section style="font-size: 150%">
                     <p><img src="images/mobilede-logo.svg" style="height: 5rem"></p>
-                    <ul>
-                        <li>9 weeks</li>
-                        <li>7 engineers</li>
-                        <li>10.81M visitors / month*</li>
-                        <li>~300 requests / second</li>
-                    </ul>
+                    <p>…as in <em>auto</em>mobile,<br>not as in mobile <em>phone</em></p>
+                    <!-- PH_TODO: cartoon with mobail/mobeelay -->
+                </section>
+
+                <!-- ebay -->
+                <section>
+                    <p>Germany's biggest online automotive ecommerce platform</p>
+                    <p>part of <img src="images/ebay-logo.svg" style="height: 4rem; vertical-align: middle"> since 2004</p>
+                    <p>10.81M visitors / month*</p>
                     <p><small>* AGOF Digital Facts 2015-06</small></p>
+                    <p>~300 requests / second</p>
+
                 </section>
 
                 <!-- mobile.de before -->
@@ -78,55 +78,19 @@
                     <a href="http://www.mobile.de/?lang=en"><img class="pull-up box-shadow" src="images/mobile.de-after-relaunch_1013x755.png"></a>
                 </section>
 
-                <!-- why node.js -->
+                <!-- breaking the monolith -->
                 <section>
-                    <img src="images/Node.js_logo.svg" style="height: 10rem">
-                    <h1>Why?</h1>
+                    <div class="PH_TODO">breaking the monolith: cartoon - 2001 movie monolith with apes and wrecking ball</div>
                 </section>
 
-                <!-- universal javascript -->
-                <section data-background="url(images/universal.png) 50% 50% / cover no-repeat">
-                    <h1 class="white">Universal JavaScript</h1>
-                </section>
-
-                <!-- module counts -->
+                <!-- service oriented architecture -->
                 <section>
-                    <a href="http://www.modulecounts.com/"><img src="images/modulecounts.png" class="box-shadow"></a>
+                    <div class="PH_TODO">plan H architecture - diagram with services and webapps, perhaps animation one of the webapps which was previously Java is not Node.js</div>
                 </section>
-
-                <!-- plan H architecture -->
-                <section>
-                    <img src="images/plan-h-architecture.svg" style="height: 40rem">
-                </section>
-
-				<!-- build system demo -->
-				<section>
-					<iframe class="box-shadow" style="width: 64rem; height: 40rem" src="https://www.youtube.com/embed/lmP06OpXyD8?vq=hd1080&start=14" frameborder="0" allowfullscreen></iframe>
-				</section>
 
                 <!-- lessons learned section title -->
                 <section>
                     <h1>Lessons Learned</h1>
-                </section>
-
-                <!-- lessons learned: experiment -->
-                <section>
-                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-experiment_700x266.png">
-                </section>
-
-                <!-- Babel -->
-                <section data-background="url(images/babel.png) 50% 50% / contain no-repeat">
-                    <img src="images/thumb-up.png" align="right" style="margin-top: 20rem" class="fragment">
-                </section>
-
-                <!-- webpack -->
-                <section data-background="url(images/webpack.png) 50% 50% / contain no-repeat">
-                    <img src="images/thumb-middle.png" align="right" style="margin-top: 20rem" class="fragment">
-                </section>
-
-                <!-- Gulp -->
-                <section data-background="url(images/gulp.svg) 50% 50% / contain no-repeat">
-                    <img src="images/thumb-down.png" align="right" style="margin-top: 20rem" class="fragment">
                 </section>
 
                 <!-- lessons learned: testable -->
@@ -135,6 +99,7 @@
                 </section>
 
                 <!-- test code example 1 -->
+                <!-- PH_TODO: replace with example from blog article -->
                 <section>
                     <!-- code under test -->
                     <section>
@@ -266,6 +231,7 @@ function setupTimeout(done) {
 
                 <!-- test system demo -->
                 <section>
+                    <!-- PH_TODO: new version with screen resolution suitable for presentation -->
                     <iframe class="box-shadow" style="width: 64rem; height: 40rem" src="https://www.youtube.com/embed/w5OBYjd27hs?vq=hd1080&start=14" frameborder="0" allowfullscreen></iframe>
                 </section>
 
@@ -288,16 +254,6 @@ function setupTimeout(done) {
                 <section>
                     <a href="images/grafana.png"><img class="box-shadow" src="images/grafana.png"></a>
                 </section>
-
-                <!-- lessons learned: npm modules -->
-                <!--<section>-->
-                    <!--<img class="box-shadow" style="width: 64rem" src="images/cross-stitch-npm-modules_700x326.png">-->
-                <!--</section>-->
-
-                <!-- kraken -->
-                <!--<section>-->
-                    <!--<img src="images/kraken.svg" style="height: 40rem">-->
-                <!--</section>-->
 
                 <!-- lessons learned: pairing -->
                 <section>
@@ -364,10 +320,10 @@ export default (...args1) => func => (...args2) => func(...args1, ...args2);
                         Follow me on Twitter: <a href="http://twitter.com/wiekatz">@wiekatz</a>
                     </p>
                     <p>
-                        Slides available on GitHub: <a href="http://pahund.github.io/ebaytechtalk29/">pahund.github.io/ebaytechtalk29</a>
+                        Slides available on GitHub: <a href="http://pahund.github.io/lessons-learned/">pahund.github.io/lessons-learned</a>
                     </p>
                     <p>
-                        Visit the eBay Technology blog: <a href="http://technology.ebay.de/">technology.ebay.de</a>
+                        Visit the eBay Technology Europe blog: <a href="http://technology.ebay.de/">technology.ebay.de</a>
                     </p>
                     <p class="margin-top"><small>Cross stitch headlines made with <a href="https://photofunia.com/">Photofunia</a></small></p>
 
