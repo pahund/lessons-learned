@@ -1,8 +1,10 @@
-# 29th #ebaytechtalk: Relaunching mobile.de with Node.js and ES6
+#  Lessons Learned from Building a High-Traffic Express Webapp
+
+Presentation from [NodeConf Barcelona 2015](http://barcelona.nodeconf.com/)
 
 ## How Do I Run the Presentation?
 
-### You can view the presentation online here: [pahund.github.io/ebaytechtalk29](http://pahund.github.io/ebaytechtalk29/)
+### You can view the presentation online here: [pahund.github.io/lessons-learned](http://pahund.github.io/lessons-learned/)
 
 The presentation is made with [Hakim El Hattab](http://hakim.se/)'s [reveal.js framework](http://lab.hakim.se/reveal-js/).
 
@@ -10,17 +12,11 @@ For instruction on how to install and run the presentation locally, refer to the
 
 ## What Is It About?
 
-_Wednesday, 28 October 2015, [mobilesuite Berlin](http://www2.mobilesuite.de/)_
-
-At the 29th #ebaytechtalk, we’ll talk about lessons learned from relaunching mobile.de’s home page (10M visitors per month) – 100% JavaScript replacing a Java webapp.
-
-As always we will have some free food and drinks afterwards.
+Every developer's dream: throw away the old stuff and rewrite everything from scratch! If the "old stuff" is a Java webapp that serves 10.81 million visitors a month and you have 9 weeks time, is it a sane choice to go for Node.js and ES6, or does the dream turn into a nightmare? In this talk, he'll look at a wild, exhilarating ride of a project and the lessons learned from it.
 
 ## About the Speaker
 
-Patrick Hund, software engineer, full stack developer and JavaScript aficionado. 
-
-He and his team created a Node.js web app from scratch within 9 weeks. They used the latest and greatest incarnation of JavaScript – ECMAScript 2015, a.k.a. ES6 – for the backend and frontend alike. They spent late nights coding in gleeful frenzy, stepped into pitfalls, moaned about WTFs, scaled the dizzy heights of asynchronicity. This is this is their story.
+Patrick Hund, software engineer, full stack developer and JavaScript aficionado. Currently employed by [mobile.de](http://www.mobile.de/), part of the [eBay Classifieds Group](http://www.ebayclassifiedsgroup.com/).
 
 Follow Patrick on Twitter: [@wiekatz](https://twitter.com/wiekatz)
 
