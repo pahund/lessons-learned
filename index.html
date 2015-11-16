@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Relaunching mobile.de with Node.js and ES6</title>
+
+		<meta name="description" content="Presentation from the 29th eBay Tech Talk in Berlin, Germany">
+		<meta name="author" content="Patrick Hund">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/pahund.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( "link" );
+			link.rel = "stylesheet";
+			link.type = "text/css";
+			link.href = window.location.search.match(/print-pdf/gi) ? "css/print/pdf.css" : "css/print/paper.css";
+			document.getElementsByTagName("head")[0].appendChild(link);
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+                <!-- title -->
+				<section>
+					<h2>Relaunching mobile.de<br>with Node.js and ES6</h2>
+                    <img src="images/node-red-pill.png" style="height: 18rem">
+					<h3>29th eBay Tech Talk in Berlin, Germany</h3>
+					<p>
+						<a href="http://about.me/wiekatz">Patrick Hund</a>,
+                        software developer at <a href="http://www.mobile.de/">mobile.de</a>
+					</p>
+				</section>
+
+                <!-- ebay -->
+                <section>
+                    <img src="images/ebay-logo.svg">
+                </section>
+
+                <!-- numbers -->
+                <section style="font-size: 150%">
+                    <p><img src="images/mobilede-logo.svg" style="height: 5rem"></p>
+                    <ul>
+                        <li>9 weeks</li>
+                        <li>7 engineers</li>
+                        <li>10.81M visitors / month*</li>
+                        <li>~300 requests / second</li>
+                    </ul>
+                    <p><small>* AGOF Digital Facts 2015-06</small></p>
+                </section>
+
+                <!-- mobile.de before -->
+                <section>
+                    <img class="pull-up box-shadow" src="images/mobile.de-before-relaunch_825x710.png">
+                </section>
+
+                <!-- mobile.de after -->
+                <section>
+                    <a href="http://www.mobile.de/?lang=en"><img class="pull-up box-shadow" src="images/mobile.de-after-relaunch_1013x755.png"></a>
+                </section>
+
+                <!-- why node.js -->
+                <section>
+                    <img src="images/Node.js_logo.svg" style="height: 10rem">
+                    <h1>Why?</h1>
+                </section>
+
+                <!-- universal javascript -->
+                <section data-background="url(images/universal.png) 50% 50% / cover no-repeat">
+                    <h1 class="white">Universal JavaScript</h1>
+                </section>
+
+                <!-- module counts -->
+                <section>
+                    <a href="http://www.modulecounts.com/"><img src="images/modulecounts.png" class="box-shadow"></a>
+                </section>
+
+                <!-- plan H architecture -->
+                <section>
+                    <img src="images/plan-h-architecture.svg" style="height: 40rem">
+                </section>
+
+				<!-- build system demo -->
+				<section>
+					<iframe class="box-shadow" style="width: 64rem; height: 40rem" src="https://www.youtube.com/embed/lmP06OpXyD8?vq=hd1080&start=14" frameborder="0" allowfullscreen></iframe>
+				</section>
+
+                <!-- lessons learned section title -->
+                <section>
+                    <h1>Lessons Learned</h1>
+                </section>
+
+                <!-- lessons learned: experiment -->
+                <section>
+                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-experiment_700x266.png">
+                </section>
+
+                <!-- Babel -->
+                <section data-background="url(images/babel.png) 50% 50% / contain no-repeat">
+                    <img src="images/thumb-up.png" align="right" style="margin-top: 20rem" class="fragment">
+                </section>
+
+                <!-- webpack -->
+                <section data-background="url(images/webpack.png) 50% 50% / contain no-repeat">
+                    <img src="images/thumb-middle.png" align="right" style="margin-top: 20rem" class="fragment">
+                </section>
+
+                <!-- Gulp -->
+                <section data-background="url(images/gulp.svg) 50% 50% / contain no-repeat">
+                    <img src="images/thumb-down.png" align="right" style="margin-top: 20rem" class="fragment">
+                </section>
+
+                <!-- lessons learned: testable -->
+                <section>
+                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-testable_700x426.png">
+                </section>
+
+                <!-- test code example 1 -->
+                <section>
+                    <!-- code under test -->
+                    <section>
+                        <h2 class="red">Bad Example – do not do this!</h2>
+                        <p class="no-margin-bottom"><small>config.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+export default {
+    serviceUrl: "http://my.service/endpoint",
+    timeout: 1000
+}
+                        </code></pre>
+                            <p class="no-margin-bottom"><small>service.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+import config from "config";
+import axios from "axios";
+import withTimeout from "withTimeout";
+
+export default () =>
+    withTimeout(axios.get(config.serviceUrl), config.timeout);
+                        </code></pre>
+                    </section>
+                    <!-- unit test code 1 -->
+                    <section>
+                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
+                        <pre class="medium no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+describe("When I call the service", () => {
+    describe("and the service returns data in time", () => {
+        before(setup);
+        describe("the resulting promise", () => {
+            it("is resolved", () => ok.called.should.be.ok);
+            it("is not rejected", () => ko.called.should.not.be.ok);
+        });
+        after(teardown);
+    });
+    describe("and the service times out", () => {
+        before(setupTimeout);
+        describe("the resulting promise", () => {
+            it("is rejected", () => ko.called.should.be.ok);
+            it("is not resolved", () => ok.called.should.not.be.ok);
+        });
+        after(teardown);
+    });
+});
+                        </code></pre>
+                    </section>
+
+                    <!-- unit test code 2 -->
+                    <section>
+                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
+                        <pre class="medium no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+function setupTimeout(done) {
+    sinon.stub(axios, "get").returns(new Promise(resolve =>
+        setTimeout(() => {
+            resolve({
+                data: "SOME_DATA"
+            });
+        }, 2000)
+    ));
+    ok = sinon.spy();
+    ko = sinon.spy();
+    result = service().then(() => {
+        ok();
+        done();
+    }).catch(() => {
+        ko();
+        done();
+    });
+}
+                        </code></pre>
+                    </section>
+                </section>
+
+                <!-- test code example 2 -->
+                <section>
+                    <!-- code under test -->
+                    <section>
+                        <h2 class="green">Good Example</h2>
+                        <p class="no-margin-bottom"><small>config.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+export default {
+    get() {
+        return {
+            serviceUrl: "http://my.service/endpoint",
+            timeout: 1000
+        };
+    }
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p class="no-margin-bottom"><small>service.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+import configurator from "./config";
+import axios from "axios";
+import withTimeout from "./withTimeout";
+
+export default () => {
+    const config = configurator.get();
+    return withTimeout(axios.get(config.serviceUrl), config.timeout);
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
+                        <pre class="small no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+function setupTimeout(done) {
+    sinon.stub(axios, "get").returns(new Promise(resolve => setTimeout(() => {
+        resolve({
+            data: "SOME_DATA"
+        });
+    }, 10)));
+    sinon.stub(config, "get").returns({
+        serviceUrl: "http://my.service/endpoint",
+        timeout: 0
+    });
+    ok = sinon.spy();
+    ko = sinon.spy();
+    result = service().then(() => {
+        ok();
+        done();
+    }).catch(() => {
+        ko();
+        done();
+    });
+}
+                        </code></pre>
+                    </section>
+                </section>
+
+                <!-- test system demo -->
+                <section>
+                    <iframe class="box-shadow" style="width: 64rem; height: 40rem" src="https://www.youtube.com/embed/w5OBYjd27hs?vq=hd1080&start=14" frameborder="0" allowfullscreen></iframe>
+                </section>
+
+                <!-- lessons learned: early prod -->
+                <section>
+                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-early-prod_700x334.png">
+                </section>
+
+                <!-- gatling before -->
+                <section>
+                    <a href="demos/gatling/Copenhagen_load_test_before/req_home-de---cph--0a4bf.html"><img class="plain" src="images/gatling-before.png"></a>
+                </section>
+
+                <!-- gatling after -->
+                <section>
+                    <a href="demos/gatling/Copenhagen_load_test_after/req_home-de---cph--0a4bf.html"><img class="plain" src="images/gatling-after.png"></a>
+                </section>
+
+                <!-- grafana -->
+                <section>
+                    <a href="images/grafana.png"><img class="box-shadow" src="images/grafana.png"></a>
+                </section>
+
+                <!-- lessons learned: npm modules -->
+                <!--<section>-->
+                    <!--<img class="box-shadow" style="width: 64rem" src="images/cross-stitch-npm-modules_700x326.png">-->
+                <!--</section>-->
+
+                <!-- kraken -->
+                <!--<section>-->
+                    <!--<img src="images/kraken.svg" style="height: 40rem">-->
+                <!--</section>-->
+
+                <!-- lessons learned: pairing -->
+                <section>
+                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-pairing_700x285.png">
+                </section>
+
+                <!-- code review cartoon -->
+                <section>
+                    <img src="images/code-review.png">
+                </section>
+
+                <!-- pair programming cartoon -->
+                <section>
+                    <img src="images/pair-programming.png">
+                </section>
+
+                <!-- lessons learned: simple -->
+                <section>
+                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-simple_700x341.png">
+                </section>
+
+                <!-- not so simple code -->
+                <section>
+                    <pre class="small no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+/**
+ * withArgs.js
+ *
+ * Curries a function with additional arguments, which are prepended
+ * to the arguments passed to the function.
+ *
+ * Example:
+ *
+ * function foo(a, b, c, d) {
+ *     console.log(a + b + c + d);
+ * }
+ *
+ * let bar = withArgs(1, 2)(foo);
+ *
+ * bar(3, 4); // => 10
+ *
+ * [ 3, 4 ].forEach(bar); // => 6; => 7
+ *
+ */
+
+export default (...args1) => func => (...args2) => func(...args1, ...args2);
+                    </code></pre>
+
+                </section>
+
+                <!-- job offer -->
+                <section>
+                    <h1>Join our team!</h1>
+                    <h2><a href="http://j.rfer.us/EBRhYLmtO">j.rfer.us/EBRhYLmtO</a></h2>
+                </section>
+
+                <!-- end -->
+                <section class="smaller-text">
+                    <img src="images/the-end.png" align="left" class="margin-right">
+                    <p class="large-margin-top">
+                        <a href="http://about.me/wiekatz">Patrick Hund</a><br>
+                        Software developer at <a href="http://www.mobile.de/">mobile.de</a>
+                    </p>
+                    <p>
+                        Follow me on Twitter: <a href="http://twitter.com/wiekatz">@wiekatz</a>
+                    </p>
+                    <p>
+                        Slides available on GitHub: <a href="http://pahund.github.io/ebaytechtalk29/">pahund.github.io/ebaytechtalk29</a>
+                    </p>
+                    <p>
+                        Visit the eBay Technology blog: <a href="http://technology.ebay.de/">technology.ebay.de</a>
+                    </p>
+                    <p class="margin-top"><small>Cross stitch headlines made with <a href="https://photofunia.com/">Photofunia</a></small></p>
+
+                </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
