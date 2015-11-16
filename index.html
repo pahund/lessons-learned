@@ -99,75 +99,56 @@
                 </section>
 
                 <!-- test code example 1 -->
-                <!-- PH_TODO: replace with example from blog article -->
                 <section>
                     <!-- code under test -->
                     <section>
                         <h2 class="red">Bad Example – do not do this!</h2>
                         <p class="no-margin-bottom"><small>config.js</small></p>
                         <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-export default {
-    serviceUrl: "http://my.service/endpoint",
-    timeout: 1000
-}
-                        </code></pre>
-                            <p class="no-margin-bottom"><small>service.js</small></p>
-                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-import config from "config";
-import axios from "axios";
-import withTimeout from "withTimeout";
+const path = "./makes.json"
 
-export default () =>
-    withTimeout(axios.get(config.serviceUrl), config.timeout);
+export default {
+    path
+};
+                        </code></pre>
+                            <p class="no-margin-bottom"><small>makes.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+import config from "./config";
+
+const data = require(config.path);
+
+function get(segment) {
+    return data[segment];
+}
+
+export default {
+    get
+};
                         </code></pre>
                     </section>
-                    <!-- unit test code 1 -->
+                    <!-- unit test code -->
                     <section>
-                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
-                        <pre class="medium no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-describe("When I call the service", () => {
-    describe("and the service returns data in time", () => {
-        before(setup);
-        describe("the resulting promise", () => {
-            it("is resolved", () => ok.called.should.be.ok);
-            it("is not rejected", () => ko.called.should.not.be.ok);
+                        <p class="no-margin-bottom"><small>makes-test.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+import chai from "chai";
+import makes from "./makes";
+
+chai.should();
+
+let result = null;
+
+describe("When I use the makes module", () => {
+    describe("to get car makes", () => {
+        before(() => result = makes.get("cars"));
+        describe("the result", () => {
+            it("is a list of car makes", () => {
+                result[0].name.should.equal("Abarth");
+                result[1].name.should.equal("AC");
+                result[2].name.should.equal("Acura");
+            });
         });
-        after(teardown);
-    });
-    describe("and the service times out", () => {
-        before(setupTimeout);
-        describe("the resulting promise", () => {
-            it("is rejected", () => ko.called.should.be.ok);
-            it("is not resolved", () => ok.called.should.not.be.ok);
-        });
-        after(teardown);
     });
 });
-                        </code></pre>
-                    </section>
-
-                    <!-- unit test code 2 -->
-                    <section>
-                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
-                        <pre class="medium no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-function setupTimeout(done) {
-    sinon.stub(axios, "get").returns(new Promise(resolve =>
-        setTimeout(() => {
-            resolve({
-                data: "SOME_DATA"
-            });
-        }, 2000)
-    ));
-    ok = sinon.spy();
-    ko = sinon.spy();
-    result = service().then(() => {
-        ok();
-        done();
-    }).catch(() => {
-        ko();
-        done();
-    });
-}
                         </code></pre>
                     </section>
                 </section>
@@ -179,52 +160,65 @@ function setupTimeout(done) {
                         <h2 class="green">Good Example</h2>
                         <p class="no-margin-bottom"><small>config.js</small></p>
                         <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+const path = "./makes.json"
+
 export default {
-    get() {
-        return {
-            serviceUrl: "http://my.service/endpoint",
-            timeout: 1000
-        };
+    getPath() {
+        return path;
     }
 };
                         </code></pre>
                     </section>
                     <section>
-                        <p class="no-margin-bottom"><small>service.js</small></p>
+                        <p class="no-margin-bottom"><small>makes.js</small></p>
                         <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-import configurator from "./config";
-import axios from "axios";
-import withTimeout from "./withTimeout";
+import config from "./config";
 
-export default () => {
-    const config = configurator.get();
-    return withTimeout(axios.get(config.serviceUrl), config.timeout);
+let data = null;
+
+function init() {
+    data = require(config.getPath());
+}
+
+function get(segment) {
+    return data ? data[segment] : null;
+}
+
+export default {
+    init,
+    get
 };
                         </code></pre>
                     </section>
                     <section>
-                        <p class="no-margin-bottom"><small>service-test.js (excerpt)</small></p>
-                        <pre class="small no-margin-top"><code class="hljs javascript" data-trim contenteditable>
-function setupTimeout(done) {
-    sinon.stub(axios, "get").returns(new Promise(resolve => setTimeout(() => {
-        resolve({
-            data: "SOME_DATA"
+                        <p class="no-margin-bottom"><small>makes-test.js</small></p>
+                        <pre class="no-margin-top"><code class="hljs javascript" data-trim contenteditable>
+import chai from "chai";
+import sinon from "sinon";
+import config from "./config";
+import makes from "./makes";
+
+chai.should();
+
+let result = null;
+
+describe("When I use the makes module", () => {
+    describe("to get car makes", () => {
+        before(() => {
+            sinon.stub(config, "getPath").returns("./test-makes.json");
+            makes.init();
+            result = makes.get("cars");
         });
-    }, 10)));
-    sinon.stub(config, "get").returns({
-        serviceUrl: "http://my.service/endpoint",
-        timeout: 0
+        describe("the result", () => {
+            it("is a list of car makes", () => {
+                result[0].name.should.equal("CarMake1");
+                result[1].name.should.equal("CarMake2");
+                result[2].name.should.equal("CarMake3");
+            });
+        });
+        after(() => config.getPath.restore());
     });
-    ok = sinon.spy();
-    ko = sinon.spy();
-    result = service().then(() => {
-        ok();
-        done();
-    }).catch(() => {
-        ko();
-        done();
-    });
-}
+});
                         </code></pre>
                     </section>
                 </section>
