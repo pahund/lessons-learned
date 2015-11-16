@@ -12,7 +12,7 @@ For instruction on how to install and run the presentation locally, refer to the
 
 ## What Is It About?
 
-Every developer's dream: throw away the old stuff and rewrite everything from scratch! If the "old stuff" is a Java webapp that serves 10.81 million visitors a month and you have 9 weeks time, is it a sane choice to go for Node.js and ES6, or does the dream turn into a nightmare? In this talk, he'll look at a wild, exhilarating ride of a project and the lessons learned from it.
+Every developer's dream: throw away the old stuff and rewrite everything from scratch! If the “old stuff” is a Java webapp that serves 10.81 million visitors a month and you have 9 weeks time, is it a sane choice to go for Node.js and ES6, or does the dream turn into a nightmare? In this talk, we'll look at a wild, exhilarating ride of a project and the lessons learned from it.
 
 ## About the Speaker
 
