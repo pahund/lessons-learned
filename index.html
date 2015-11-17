@@ -6,7 +6,7 @@
 
 		<title>Lessons Learned from Building a High-Traffic Express Webapp</title>
 
-		<meta name="description" content="Presentation from the 29th eBay Tech Talk in Berlin, Germany">
+		<meta name="description" content="Presentation from NodeConf Barcelona 2015">
 		<meta name="author" content="Patrick Hund">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -43,7 +43,7 @@
                 <!-- title -->
 				<section>
 					<h2>Lessons Learned from Building a<br>High-Traffic Express Webapp</h2>
-                    <img src="images/node-red-pill.png" style="height: 18rem">
+                    <img data-src="images/node-red-pill.png" style="height: 18rem">
 					<h3>NodeConf Barcelona 2015</h3>
 					<p>
 						<a href="http://about.me/wiekatz">Patrick Hund</a>,
@@ -53,7 +53,7 @@
 
                 <!-- mobile.de -->
                 <section style="font-size: 150%">
-                    <p><img src="images/mobilede-logo.svg" style="height: 5rem"></p>
+                    <p><img data-src="images/mobilede-logo.svg" style="height: 5rem"></p>
                     <p>…as in <em>auto</em>mobile,<br>not as in mobile <em>phone</em></p>
                     <!-- PH_TODO: cartoon with mobail/mobeelay -->
                 </section>
@@ -61,7 +61,7 @@
                 <!-- ebay -->
                 <section>
                     <p>Germany's biggest automotive ecommerce platform</p>
-                    <p>part of <img src="images/ebay-logo.svg" style="height: 4rem; vertical-align: middle; margin: 0 1rem"> since 2004</p>
+                    <p>part of <img data-src="images/ebay-logo.svg" style="height: 4rem; vertical-align: middle; margin: 0 1rem"> since 2004</p>
                     <p>10.81M visitors / month</p>
                     <p><small>(AGOF Digital Facts 2015-06)</small></p>
                     <p>~300 requests / second</p>
@@ -70,12 +70,12 @@
 
                 <!-- mobile.de before -->
                 <section>
-                    <img class="pull-up box-shadow" src="images/mobile.de-before-relaunch_825x710.png">
+                    <img class="pull-up box-shadow" data-src="images/mobile.de-before-relaunch_825x710.png">
                 </section>
 
                 <!-- mobile.de after -->
                 <section>
-                    <a href="http://www.mobile.de/?lang=en"><img class="pull-up box-shadow" src="images/mobile.de-after-relaunch_1013x755.png"></a>
+                    <a href="http://www.mobile.de/?lang=en"><img class="pull-up box-shadow" data-src="images/mobile.de-after-relaunch_1013x755.png"></a>
                 </section>
 
                 <!-- breaking the monolith -->
@@ -84,17 +84,16 @@
                 </section>
 
                 <!-- breaking the monolith cartoon -->
-                <section>
-                    <div class="PH_TODO">breaking the monolith cartoon</div>
-                </section>
+                <section data-background="url(images/breaking-the-monolith-before.png) no-repeat center"></section>
+                <section data-background="url(images/breaking-the-monolith-after.png) no-repeat center"></section>
 
                 <!-- service oriented architecture -->
                 <section data-transition="none">
-                    <img src="images/plan-h-architecture.png">
+                    <img data-src="images/plan-h-architecture.png">
                 </section>
 
                 <section data-transition="none">
-                    <img src="images/plan-h-architecture-node.png">
+                    <img data-src="images/plan-h-architecture-node.png">
                 </section>
 
                 <!-- lessons learned section title -->
@@ -104,32 +103,39 @@
 
                 <!-- lessons learned: early prod -->
                 <section>
-                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-early-prod_700x334.png">
+                    <img class="box-shadow" style="width: 64rem" data-src="images/cross-stitch-early-prod_700x334.png">
                 </section>
 
                 <!-- gatling before -->
                 <section>
-                    <a href="demos/gatling/Copenhagen_load_test_before/req_home-de---cph--0a4bf.html"><img src="images/gatling-before.png"></a>
+                    <a href="demos/gatling/Copenhagen_load_test_before/req_home-de---cph--0a4bf.html"><img data-src="images/gatling-before.png"></a>
                 </section>
 
                 <!-- gatling after -->
                 <section>
-                    <a href="demos/gatling/Copenhagen_load_test_after/req_home-de---cph--0a4bf.html"><img src="images/gatling-after.png"></a>
+                    <a href="demos/gatling/Copenhagen_load_test_after/req_home-de---cph--0a4bf.html"><img data-src="images/gatling-after.png"></a>
                 </section>
 
-                <!-- comparison before-after -->
                 <section>
-                    <img src="images/gatling-old-vs-new.png">
+                    <!-- comparison before-after -->
+                    <section>
+                        <img data-src="images/gatling-old-vs-new.png">
+                    </section>
+
+                    <!-- grafana -->
+                    <section>
+                        <a href="images/grafana.png"><img class="box-shadow" data-src="images/grafana.png"></a>
+                    </section>
                 </section>
 
                 <!-- lessons learned: testable -->
                 <section>
-                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-testable_700x426.png">
+                    <img class="box-shadow" style="width: 64rem" data-src="images/cross-stitch-testable_700x426.png">
                 </section>
 
                 <!-- cartoon: building up, tearing down -->
                 <section>
-                    <img src="images/building-up-tearing-down_500x400.png">
+                    <img data-src="images/building-up-tearing-down_500x400.png">
                 </section>
 
                 <!-- test code example 1 -->
@@ -255,31 +261,33 @@ describe("When I use the makes module", () => {
 });
                         </code></pre>
                     </section>
+
+                    <section data-background-video="videos/npm-test-demo.mp4"></section>
                 </section>
 
                 <!-- lessons learned: pairing -->
                 <section>
-                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-pairing_700x285.png">
+                    <img class="box-shadow" style="width: 64rem" data-src="images/cross-stitch-pairing_700x285.png">
                 </section>
 
                 <!-- code review cartoon -->
                 <section>
-                    <img src="images/code-review.png">
+                    <img data-src="images/code-review.png">
                 </section>
 
                 <!-- pair programming cartoon -->
                 <section>
-                    <img src="images/pair-programming.png">
+                    <img data-src="images/pair-programming.png">
                 </section>
 
                 <!-- lessons learned: simple -->
                 <section>
-                    <img class="box-shadow" style="width: 64rem" src="images/cross-stitch-simple_700x341.png">
+                    <img class="box-shadow" style="width: 64rem" data-src="images/cross-stitch-simple_700x341.png">
                 </section>
 
                 <!-- end -->
                 <section class="smaller-text">
-                    <img src="images/the-end.png" align="left" class="margin-right">
+                    <img data-src="images/the-end.png" align="left" class="margin-right">
                     <p class="large-margin-top">
                         <a href="http://about.me/wiekatz">Patrick Hund</a><br>
                         Software developer at <a href="http://www.mobile.de/">mobile.de</a>
