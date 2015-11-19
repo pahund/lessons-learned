@@ -49,13 +49,18 @@
 						<a href="http://about.me/wiekatz">Patrick Hund</a>,
                         software developer at <a href="http://www.mobile.de/">mobile.de</a>
 					</p>
+                    <aside class="notes">
+                        don't talk too much about project yet, just read what's on the slide
+                    </aside>
 				</section>
 
                 <!-- mobile.de -->
                 <section style="font-size: 150%">
                     <p><img data-src="images/mobilede-logo.svg" style="height: 5rem"></p>
                     <p>…as in <em>auto</em>mobile,<br>not as in mobile <em>phone</em></p>
-                    <!-- PH_TODO: cartoon with mobail/mobeelay -->
+                    <aside class="notes">
+                        people keep thinking we're a mobile phone shop or something
+                    </aside>
                 </section>
 
                 <!-- ebay -->
@@ -65,50 +70,104 @@
                     <p>10.81M visitors / month</p>
                     <p><small>(AGOF Digital Facts 2015-06)</small></p>
                     <p>~300 requests / second</p>
-
+                    <aside class="notes">
+                        high traffic:
+                        <ul>
+                            <li>performance</li>
+                            <li>safety – failure affects many, many customers</li>
+                        </ul>
+                    </aside>
                 </section>
 
                 <!-- mobile.de before -->
                 <section>
                     <img class="pull-up box-shadow" data-src="images/mobile.de-before-relaunch_825x710.png">
+                    <aside class="notes">
+                        exciting project: throw away the old stuff, rebuild from scratch, every dev's dream
+                    </aside>
                 </section>
 
                 <!-- mobile.de after -->
                 <section>
                     <a href="http://www.mobile.de/?lang=en"><img class="pull-up box-shadow" data-src="images/mobile.de-after-relaunch_1013x755.png"></a>
+                    <aside class="notes">
+                        <ul>
+                            <li>clearer, more modern layout</li>
+                            <li>optimized for touch devices (tablets)</li>
+                        </ul>
+                    </aside>
                 </section>
 
                 <!-- breaking the monolith -->
                 <section>
                     <h1>Breaking the Monolith</h1>
+                    <aside class="notes">
+                        <ul>
+                            <li>most important aspect from a technical point of view</li>
+                            <li>ongoing process since last year</li>
+                        </ul>
+                    </aside>
                 </section>
 
                 <!-- breaking the monolith cartoon -->
-                <section data-background="url(images/breaking-the-monolith-before.png) no-repeat center 100%/contain"></section>
-                <section data-background="url(images/breaking-the-monolith-after.png) no-repeat center 100%/contain"></section>
+                <section data-background="url(images/breaking-the-monolith-before.png) no-repeat center/contain">
+                    <aside class="notes">
+                        <ul>
+                            <li>monolith? large, complex system of <strong>tightly coupled</strong> modules and components</li>
+                            <li>crippling <strong>technical debt</strong></li>
+                            <li>making changes: <strong>great cost</strong> and <strong>high risk</strong></li>
+                        </ul>
+                    </aside>
+                </section>
+                <section data-background="url(images/breaking-the-monolith-after.png) no-repeat center/contain"></section>
 
                 <!-- service oriented architecture -->
                 <section data-transition="none">
                     <img data-src="images/plan-h-architecture.png">
+                    <p>Service-oriented Architechture (SOA)</p>
+                    <aside class="notes">
+                        <ul>
+                            <li>loosely coupled webapps and services</li>
+                            <li>easy to maintain and even replace single parts</li>
+                        </ul>
+                    </aside>
                 </section>
 
                 <section data-transition="none">
                     <img data-src="images/plan-h-architecture-node.png">
+                    <p>Service-oriented Architechture (SOA)</p>
                 </section>
 
                 <!-- lessons learned section title -->
                 <section>
                     <h1>Lessons Learned</h1>
+                    <aside class="notes">
+                        not enough time to talk about all of them, just the most important
+                    </aside>
                 </section>
 
                 <!-- lessons learned: early prod -->
                 <section>
                     <img class="box-shadow" style="width: 64rem" data-src="images/cross-stitch-early-prod_700x334.png">
+                    <aside class="notes">
+                        <ul>
+                            <li>story: fixed deadline, exciting weeks of coding, new technology</li>
+                            <li>load tests started just a few days before launch date</li>
+                        </ul>
+                    </aside>
                 </section>
 
                 <!-- gatling before -->
                 <section>
                     <a href="demos/gatling/Copenhagen_load_test_before/req_home-de---cph--0a4bf.html"><img data-src="images/gatling-before.png"></a>
+                    <aside class="notes">
+                        <ul>
+                            <li>"silent" release before launch</li>
+                            <li>Gatling tests run against production system</li>
+                            <li>massive performance problems</li>
+                            <li>"hackathon" to remove faulty module</li>
+                        </ul>
+                    </aside>
                 </section>
 
                 <!-- gatling after -->
@@ -118,9 +177,7 @@
 
                 <section>
                     <!-- comparison before-after -->
-                    <section>
-                        <img data-src="images/gatling-old-vs-new.png">
-                    </section>
+                    <section data-background="url(images/gatling-old-vs-new.png) no-repeat center/contain"></section>
 
                     <!-- grafana -->
                     <section>
@@ -134,8 +191,11 @@
                 </section>
 
                 <!-- cartoon: building up, tearing down -->
-                <section>
-                    <img data-src="images/building-up-tearing-down_500x400.png">
+                <section data-background="url(images/building-up-tearing-down.png) no-repeat center/contain">
+                    <img>
+                    <aside class="notes">
+                        a phenomenon every developer knows: tearing down with your butt what you've build up with your hands
+                    </aside>
                 </section>
 
                 <!-- test code example 1 -->
